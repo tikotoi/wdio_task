@@ -144,8 +144,8 @@ export const config = {
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
   mochaOpts: {
-    ui: "bdd",
     retries: 2,
+    ui: "bdd",
     timeout: 60000,
   },
 
