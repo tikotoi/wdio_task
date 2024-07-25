@@ -1,16 +1,13 @@
 {
   "name": "wdiopracticaltask",
   "version": "1.0.0",
-  "description": "",
-  "main": "",
+  "description": "Trello web BDD scenarios",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "wdio": "wdio run ./wdio.conf.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Tinatin Abuladze",
+  "license": "UNLICENSED",
   "devDependencies": {
     "@wdio/cli": "^8.39.1",
     "@wdio/firefox-profile-service": "^8.39.0",
@@ -20,7 +17,6 @@
     "chromedriver": "^126.0.5",
     "geckodriver": "^4.4.2",
     "wdio-chromedriver-service": "^8.1.1",
-    "wdio-geckodriver-service": "^5.0.2",
-    "wdio-safaridriver-service": "^2.1.1"
+    "wdio-geckodriver-service": "^5.0.2"
   }
 }
