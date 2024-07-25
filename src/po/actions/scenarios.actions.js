@@ -70,5 +70,11 @@ export const userChangesVisibility = async () => {
   await basepage.TrelloComponents.item("visibilityBtn").click();
   await basepage.TrelloComponents.item("private").click();
   const svgPath = await basepage.TrelloComponents.item("checkmarkSvg");
-  expect(svgPath).toHaveAttribute("d");
+  await expect(svgPath).toHaveAttribute("d");
+}
+
+//User changes board to table format
+export const userChangeBoardToTable = async () => {
+  await basepage.TrelloComponents.item("tableBtn").click();
+  await expect(browser).toHaveUrlContaining("table");
 }
