@@ -29,13 +29,14 @@ export const userUpdateProfileInfo = async () => {
 
 //User creates a new board
 export const userCreatesNewBoard = async () => {
+  const boardName = basepage.TrelloComponents.generateTitle("board");
   await basepage.TrelloComponents.item("logo").click()
   await basepage.TrelloComponents.item("newBoard").waitForDisplayed();
   await basepage.TrelloComponents.item("newBoard").click();
   await basepage.TrelloComponents.item("boardTitle").waitForDisplayed();
-  await basepage.TrelloComponents.item("boardTitle").setValue("Daily Task");
+  await basepage.TrelloComponents.item("boardTitle").setValue(boardName);
   await basepage.TrelloComponents.item("createBtn").click();
-  await expect(browser).toHaveTitle("Daily Task | Trello");
+  await expect(browser).toHaveTitle(new RegExp(`^${boardName.trim()}\\s*\\|\\s*Trello$`));
 }
 
 //User searches for a board
@@ -51,20 +52,26 @@ export const userSearchForBoard = async () => {
 
 //User creates new lists on a board
 export const userCreatesNewList = async () => {
+  const listTitle = basepage.TrelloComponents.generateTitle("list");
   await basepage.TrelloComponents.item("addList").click();
-  await basepage.TrelloComponents.item("listValue").setValue("Test Cases");
+  await basepage.TrelloComponents.item("listValue").setValue(listTitle);
   await basepage.TrelloComponents.item("addListBtn").click();
-  const listTitle = await basepage.TrelloComponents.item("listTitle").getText();
-  await expect(listTitle).toEqual("Test Cases");
+  const listTitleText = await basepage.TrelloComponents.getListByTitle(listTitle).getText();
+  await expect(listTitleText).toEqual(listTitle);
+  const listTitleDisplay = await basepage.TrelloComponents.getListByTitle(listTitle);
+  await expect(listTitleDisplay).toBeDisplayed();
 }
 
 //User creates a new card in a list
 export const userCreatesNewCard = async () => {
+  const cardName = basepage.TrelloComponents.generateTitle("card");
   await basepage.TrelloComponents.addNewCard().click();
-  await basepage.TrelloComponents.item("cardValue").setValue("A new card");
+  await basepage.TrelloComponents.item("cardValue").setValue(cardName);
   await basepage.TrelloComponents.item("addCardBtn").click();
-  const cardTitle = await basepage.TrelloComponents.item("cardTitle").getText();
-  await expect(cardTitle).toEqual("A new card");
+  const cardNameText = await basepage.TrelloComponents.getCardByName(cardName).getText();
+  await expect(cardNameText).toEqual(cardName);
+  const cardNameDisplay = await basepage.TrelloComponents.getCardByName(cardName);
+  await expect(cardNameDisplay).toBeDisplayed();
 }
 
 //User filtering of cards by label
@@ -72,8 +79,14 @@ export const userFilteringCardByLabel = async () => {
   await basepage.TrelloComponents.item("filterBtn").click();
   await basepage.TrelloComponents.item("filterInput").setValue("Urgent");
   await basepage.TrelloComponents.item("filter").click();
-  const filteredCard = await basepage.TrelloComponents.item("filteredCard").getText();
-  await expect(filteredCard).toContain("match filters"); 
+  await Promise.all(basepage.TrelloComponents.urgentCards.map(async card => {
+    const isDisplayed = await card.isDisplayed();
+    expect(isDisplayed).toBe(true);
+  }));
+  await Promise.all(basepage.TrelloComponents.nonUrgentCards.map(async card => {
+    const isDisplayed = await card.isDisplayed();
+    expect(isDisplayed).toBe(false);
+  }));
 }
 
 //User changes workspace visibility
