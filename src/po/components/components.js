@@ -61,12 +61,8 @@ export class TrelloComponents {
     }_${this.generateRandomString()}`;
   }
 
-  parentDivList() {
-    return $("//div[@data-testid='list']//h2[text()='Tasks']");
-  }
-
-  async getAllCards() {
-    return await this.parentDivList.$$("li[data-testid='list-card']");
+  getAllCards() {
+    return $$("li[data-testid='list-card']");
   }
 
   urgentCards = [];
