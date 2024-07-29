@@ -22,15 +22,12 @@ export class TrelloComponents {
       addList: "[data-testid='list-composer-button']",
       listValue: "//textarea[@placeholder='Enter list title…']",
       addListBtn: "//button[text()='Add list']",
-      listTitle: "//h2[text()='Test Cases']",
       cardValue: "[data-testid='list-card-composer-textarea']",
       addCardBtn: "//button[text()='Add card']",
-      cardTitle: "//a[text()='A new card']",
       filterBtn: "//div[text()='Filters']",
       filterInput: "//input[@placeholder='Enter a keyword…']",
       filter:
         "//span[@aria-label='Color: bold red, title: “Urgent”' and @data-color='red_dark' and @data-testid='card-label']",
-      filteredCard: "//p[text()='2 cards match filters']",
       visibilityBtn: ".WMmcWJ5gc165zK",
       private: "[data-testid='board-visibility-dropdown-Private']",
       checkmarkSvg: 'svg[role="presentation"] path',
@@ -41,5 +38,48 @@ export class TrelloComponents {
 
   addNewCard() {
     return $$("[data-testid='list-add-card-button']")[1];
+  }
+
+  getListByTitle(title) {
+    return $(`//h2[@data-testid='list-name' and text()='${title}']`);
+  }
+
+  getCardByName(name) {
+    return $(`//a[@data-testid='card-name' and text()='${name}']`);
+  }
+
+  generateRandomString() {
+    return (Math.random() + 1).toString(36).substring(5);
+  }
+
+  generateTitle(type) {
+    if (type !== "list" && type !== "card" && type !== "board") {
+      throw new Error(`Invalid ${type}. Use 'list' or 'card' or 'board'`);
+    }
+    return `${
+      type.charAt(0).toUpperCase() + type.slice(1)
+    }_${this.generateRandomString()}`;
+  }
+
+  getAllCards() {
+    return $$("li[data-testid='list-card']");
+  }
+
+  urgentCards = [];
+  nonUrgentCards = [];
+
+  async checkOnlyUrgentCardsDisplayed() {
+    const cards = await this.getAllCards();
+
+    for (const card of cards) {
+      const cardText = await card.getText();
+      const isDisplayed = await card.isDisplayed();
+
+      if (cardText.includes("Urgent") && isDisplayed) {
+        this.urgentCards.push(card);
+      } else if (isDisplayed) {
+        this.nonUrgentCards.push(card);
+      }
+    }
   }
 }
