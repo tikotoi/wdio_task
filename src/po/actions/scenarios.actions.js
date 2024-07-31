@@ -15,7 +15,7 @@ export const userlogInSuccessfully = async () => {
   await basepage.TrelloComponents.item("logInBtn").click();
   const accountTitle = await basepage.TrelloComponents.item("accountInfo");
   const titleAttribute = await accountTitle.getAttribute("title");
-  assert.equal(titleAttribute, "Wdio Task (wdiotask)");
+  assert.equal(titleAttribute, "Wdio Task (wdiotask)", `User hasn't logged in successfully`);
 };
 
 // User update profile information
@@ -27,7 +27,7 @@ export const userUpdateProfileInfo = async () => {
   await basepage.TrelloComponents.item("saveBtn").click();
   await basepage.TrelloComponents.item("saveText").isDisplayed();
   const bioInfo = await basepage.TrelloComponents.item("bio").getText();
-  bioInfo.should.equal("WDIO Practical Task _ Tinatin Abuladze");
+  bioInfo.should.equal("WDIO Practical Task _ Tinatin Abuladze", `Profile information hasn't been updated`);
 };
 
 //User creates a new board
@@ -40,7 +40,7 @@ export const userCreatesNewBoard = async () => {
   await basepage.TrelloComponents.item("boardTitle").setValue(boardName);
   await basepage.TrelloComponents.item("createBtn").click();
   const boardNameDisplay = await basepage.TrelloComponents.item("boardNameDisplay").getText();
-  expect(boardNameDisplay).to.equal(boardName);
+  expect(boardNameDisplay, `A new board name ${boardNameDisplay} isn't equal to ${boardName}`).to.equal(boardName);
 }
 
 //User searches for a board
@@ -50,7 +50,7 @@ export const userSearchForBoard = async () => {
   await basepage.TrelloComponents.item("searchInput").setValue("Example test case");
   await basepage.TrelloComponents.item("searchResult").click();
   const title = await browser.getTitle();
-  assert.equal(title, "Example test case | Trello");
+  assert.equal(title, "Example test case | Trello", `The board hasn't been found`);
 }
 
 //User creates new lists on a board
@@ -62,7 +62,7 @@ export const userCreatesNewList = async () => {
   const listTitleText = await basepage.TrelloComponents.getListByTitle(listTitle).getText();
   expect(listTitleText).to.equal(listTitle);
   const listTitleDisplay = await basepage.TrelloComponents.getListByTitle(listTitle).isDisplayed();
-  expect(listTitleDisplay).to.be.true;
+  expect(listTitleDisplay, `List with title - "${listTitle}" isn't displayed`).to.be.true;
 }
 
 //User creates a new card in a list
@@ -74,7 +74,7 @@ export const userCreatesNewCard = async () => {
   const cardNameText = await basepage.TrelloComponents.getCardByName(cardName).getText();
   expect(cardNameText).to.equal(cardName);
   const cardNameDisplay = await basepage.TrelloComponents.getCardByName(cardName).isDisplayed();
-  expect(cardNameDisplay).to.be.true;
+  expect(cardNameDisplay, `Card with name - "${cardName}" isn't displayed`).to.be.true;
 }
 
 //User filtering of cards by label
@@ -84,11 +84,11 @@ export const userFilteringCardByLabel = async () => {
   await basepage.TrelloComponents.item("filter").click();
   await Promise.all(basepage.TrelloComponents.urgentCards.map(async card => {
     const isDisplayed = await card.isDisplayed();
-    assert.isTrue(isDisplayed);
+    assert.isTrue(isDisplayed, `Urgent cards are not displayed`);
   }));
   await Promise.all(basepage.TrelloComponents.nonUrgentCards.map(async card => {
     const isDisplayed = await card.isDisplayed();
-    assert.isFalse(isDisplayed);
+    assert.isFalse(isDisplayed, `Urgent cards is displayed, It shoud be non urgent cards`);
   }));
 }
 
@@ -96,13 +96,15 @@ export const userFilteringCardByLabel = async () => {
 export const userChangesVisibility = async () => {
   await basepage.TrelloComponents.item("visibilityBtn").click();
   await basepage.TrelloComponents.item("private").click();
-  const svgPath = await basepage.TrelloComponents.item("checkmarkSvg").getAttribute("d");
-  expect(svgPath).to.exist;
+  await basepage.TrelloComponents.item("visibilityBtn").click();
+  const checkIcon = await basepage.TrelloComponents.item("checkIcon");
+  expect(checkIcon, `Visibility haven't changed to private`).to.exist;
 }
 
 //User changes board to table format
 export const userChangeBoardToTable = async () => {
   await basepage.TrelloComponents.item("tableBtn").click();
-  const currentUrl = await browser.getUrl();
-  currentUrl.should.include("table");
+  await basepage.TrelloComponents.item("tableBody").waitForDisplayed();
+  const tableBody = await basepage.TrelloComponents.item("tableBody").isDisplayed();
+  tableBody.should.equal(true, `Couldn't change the board to table format, you are still on the board`);
 }
