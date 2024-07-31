@@ -16,6 +16,7 @@ export class TrelloComponents {
       newBoard: "//span[text()='Create new board']",
       boardTitle: "[data-testid='create-board-title-input']",
       createBtn: "//button[text()='Create']",
+      boardNameDisplay: "[data-testid='board-name-display']",
       search: "//input[@placeholder='Search']",
       searchInput: "//input[@placeholder='Search Trello']",
       searchResult: ".css-1a9l0m2",
