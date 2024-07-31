@@ -20,7 +20,7 @@ export class TrelloComponents {
       search: "//input[@placeholder='Search']",
       searchInput: "//input[@placeholder='Search Trello']",
       searchResult: ".css-1a9l0m2",
-      addList: "[data-testid='list-composer-button']",
+      addList: "//button[text()='Add another list']",
       listValue: "//textarea[@placeholder='Enter list title…']",
       addListBtn: "//button[text()='Add list']",
       cardValue: "[data-testid='list-card-composer-textarea']",
@@ -31,8 +31,9 @@ export class TrelloComponents {
         "//span[@aria-label='Color: bold red, title: “Urgent”' and @data-color='red_dark' and @data-testid='card-label']",
       visibilityBtn: ".WMmcWJ5gc165zK",
       private: "[data-testid='board-visibility-dropdown-Private']",
-      checkmarkSvg: 'svg[role="presentation"] path',
+      checkIcon: "[data-testid='board-visibility-dropdown-Private'] span[data-testid='CheckIcon']",
       tableBtn: "//a[@data-testid='view-switcher-button-table']",
+      tableBody: "[data-testid='table-body']"
     };
     return $(selector[name]);
   }

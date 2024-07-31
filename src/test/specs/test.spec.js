@@ -43,7 +43,7 @@ describe("Trello BDD Scenarios", () => {
     await userChangesVisibility();
   });
 
-  it("User Changes Board Title", async () => {
+  it("User Changes Board to Table", async () => {
     await userChangeBoardToTable();
   });
 });
