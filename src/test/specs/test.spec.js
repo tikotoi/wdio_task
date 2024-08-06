@@ -1,49 +1,39 @@
-import {
-  userlogInSuccessfully,
-  userUpdateProfileInfo,
-  userCreatesNewBoard,
-  userSearchForBoard,
-  userCreatesNewList,
-  userCreatesNewCard,
-  userFilteringCardByLabel,
-  userChangesVisibility,
-  userChangeBoardToTable,
-} from "../../po/actions/index.js";
+import { pages } from "../../po/page/index.js";
 
 describe("Trello BDD Scenarios", () => {
   before(async () => {
-    await userlogInSuccessfully();
+    await pages("basePage").userlogInSuccessfully();
   });
 
   it("User Update Profile Info", async () => {
-    await userUpdateProfileInfo();
+    await pages("homePage").userUpdateProfileInfo();
   });
 
   it("User Creates New Board", async () => {
-    await userCreatesNewBoard();
+    await pages("homePage").userCreatesNewBoard();
   });
 
   it("User Search For Board", async () => {
-    await userSearchForBoard();
+    await pages("boardPage").userSearchForBoard();
   });
 
   it("User Creates New List", async () => {
-    await userCreatesNewList();
+    await pages("boardPage").userCreatesNewList();
   });
 
   it("User Creates New Card", async () => {
-    await userCreatesNewCard();
+    await pages("boardPage").userCreatesNewCard();
   });
 
   it("User Filtering Card By Label", async () => {
-    await userFilteringCardByLabel();
+    await pages("boardPage").userFilteringCardByLabel();
   });
 
   it("User Changes Visibility", async () => {
-    await userChangesVisibility();
+    await pages("boardPage").userChangesVisibility();
   });
 
   it.skip("User Changes Board to Table", async () => {
-    await userChangeBoardToTable();
+    await pages("boardPage").userChangeBoardToTable();
   });
 });
