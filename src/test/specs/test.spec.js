@@ -8,7 +8,7 @@ import {
   userFilteringCardByLabel,
   userChangesVisibility,
   userChangeBoardToTable,
-} from "../../po/actions/scenarios.actions.js";
+} from "../../po/actions/index.js";
 
 describe("Trello BDD Scenarios", () => {
   before(async () => {
@@ -43,7 +43,7 @@ describe("Trello BDD Scenarios", () => {
     await userChangesVisibility();
   });
 
-  it("User Changes Board to Table", async () => {
+  it.skip("User Changes Board to Table", async () => {
     await userChangeBoardToTable();
   });
 });

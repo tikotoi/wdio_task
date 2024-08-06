@@ -4,7 +4,7 @@
   "description": "Trello web BDD scenarios",
   "type": "module",
   "scripts": {
-    "wdio": "wdio run ./wdio.conf.js"
+    "wdio": "wdio run src/configs/wdio.conf.js"
   },
   "author": "Tinatin Abuladze",
   "license": "UNLICENSED",

@@ -1,7 +1,8 @@
-import { TrelloComponents } from "../components/components.js";
+import { BasePageComponents } from "../components/index.js";
+
 export class Basepage {
   constructor() {
-    this.TrelloComponents = new TrelloComponents();
+    this.basePageComponents = new BasePageComponents();
   }
 
   async open() {
