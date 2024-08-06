@@ -54,12 +54,12 @@ export const config = {
         args: ["headless", "disable-gpu"],
       },
     },
-    // {
-    //   browserName: "firefox",
-    //   "moz:firefoxOptions": {
-    //     args: ["-headless"],
-    //   },
-    // },
+    {
+      browserName: "firefox",
+      "moz:firefoxOptions": {
+        args: ["-headless"],
+      },
+    },
   ],
 
   //
