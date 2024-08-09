@@ -2,12 +2,10 @@ import {
   BoardHeader,
   BoardCanvas,
   HeaderComponent,
-  RandomTitleGenerator,
 } from "../components/index.js";
 
 import { assert, expect, should } from "chai";
 should();
-
 export class BoardPage {
   constructor() {
     this.headerComponent = new HeaderComponent();
@@ -16,43 +14,41 @@ export class BoardPage {
   }
 
   //User searches for a board
-async userSearchForBoard () {
+async searchForBoard (item) {
   await this.headerComponent.item("search").waitForDisplayed();
   await this.headerComponent.item("search").click();
-  await this.headerComponent.item("searchInput").setValue("Example test case");
+  await this.headerComponent.item("searchInput").setValue(item);
   await this.headerComponent.item("searchResult").click();
   const title = await browser.getTitle();
   assert.equal(title, "Example test case | Trello", `The board hasn't been found`);
 }
 
 //User creates new lists on a board
-async userCreatesNewList () {
-  const listTitle = RandomTitleGenerator.titleGenerator("list");
+async createsNewList (item) {
   await this.boardCanvas.item("addList").click();
-  await this.boardCanvas.item("listValue").setValue(listTitle);
+  await this.boardCanvas.item("listValue").setValue(item);
   await this.boardCanvas.item("addListBtn").click();
-  const listTitleText = await this.boardCanvas.getListByTitle(listTitle).getText();
-  expect(listTitleText).to.equal(listTitle);
-  const listTitleDisplay = await this.boardCanvas.getListByTitle(listTitle).isDisplayed();
-  expect(listTitleDisplay, `List with title - "${listTitle}" isn't displayed`).to.be.true;
+  const listTitleText = await this.boardCanvas.getListByTitle(item).getText();
+  expect(listTitleText).to.equal(item);
+  const listTitleDisplay = await this.boardCanvas.getListByTitle(item).isDisplayed();
+  expect(listTitleDisplay, `List with title - "${item}" isn't displayed`).to.be.true;
 }
 
 //User creates a new card in a list
-async userCreatesNewCard () {
-  const cardName = RandomTitleGenerator.titleGenerator("card");
+async createsNewCard (item) {
   await this.boardCanvas.addNewCard().click();
-  await this.boardCanvas.item("cardValue").setValue(cardName);
+  await this.boardCanvas.item("cardValue").setValue(item);
   await this.boardCanvas.item("addCardBtn").click();
-  const cardNameText = await this.boardCanvas.getCardByName(cardName).getText();
-  expect(cardNameText).to.equal(cardName);
-  const cardNameDisplay = await this.boardCanvas.getCardByName(cardName).isDisplayed();
-  expect(cardNameDisplay, `Card with name - "${cardName}" isn't displayed`).to.be.true;
+  const cardNameText = await this.boardCanvas.getCardByName(item).getText();
+  expect(cardNameText).to.equal(item);
+  const cardNameDisplay = await this.boardCanvas.getCardByName(item).isDisplayed();
+  expect(cardNameDisplay, `Card with name - "${item}" isn't displayed`).to.be.true;
 }
 
 //User filtering of cards by label
-async userFilteringCardByLabel () {
+async filteringCardByLabel (item) {
   await this.boardHeader.item("filterBtn").click();
-  await this.boardHeader.item("filterInput").setValue("Urgent");
+  await this.boardHeader.item("filterInput").setValue(item);
   await this.boardHeader.item("filter").click();
   await Promise.all(this.boardCanvas.urgentCards.map(async card => {
     const isDisplayed = await card.isDisplayed();
@@ -65,7 +61,7 @@ async userFilteringCardByLabel () {
 }
 
 //User changes workspace visibility
-async userChangesVisibility () {
+async changesVisibility () {
   await this.boardHeader.item("visibilityBtn").click();
   await this.boardHeader.item("private").click();
   await this.boardHeader.item("visibilityBtn").click();
@@ -74,7 +70,7 @@ async userChangesVisibility () {
 }
 
 //User changes board to table format
-async userChangeBoardToTable () {
+async changeBoardToTable () {
   await this.boardHeader.item("tableBtn").click();
   await this.boardCanvas.item("tableBody").waitForDisplayed();
   const tableBody = await this.boardCanvas.item("tableBody").isDisplayed();

@@ -1,7 +1,6 @@
 import {
   HeaderComponent,
   HomeBodyComponents,
-  RandomTitleGenerator,
   BoardHeader
 } from "../components/index.js";
 
@@ -16,11 +15,11 @@ export class HomePage {
   }
 
   //User updates profile info
-  async userUpdateProfileInfo () {
+  async updateProfileInfo (item) {
     await this.headerComponent.item("account").waitForDisplayed();
     await this.headerComponent.item("account").click();
     await this.headerComponent.item("profile").click();
-    await this.homeBodyComponents.item("bio").setValue("WDIO Practical Task _ Tinatin Abuladze");
+    await this.homeBodyComponents.item("bio").setValue(item);
     await this.homeBodyComponents.item("saveBtn").click();
     await this.homeBodyComponents.item("saveText").isDisplayed();
     const bioInfo = await this.homeBodyComponents.item("bio").getText();
@@ -28,15 +27,14 @@ export class HomePage {
   };
 
   //User creates a new board
-  async userCreatesNewBoard () {
-    const boardName = RandomTitleGenerator.titleGenerator("board");
+  async createsNewBoard (item) {
     await this.headerComponent.item("logo").click()
     await this.homeBodyComponents.item("newBoard").waitForDisplayed();
     await this.homeBodyComponents.item("newBoard").click();
     await this.homeBodyComponents.item("boardTitle").waitForDisplayed();
-    await this.homeBodyComponents.item("boardTitle").setValue(boardName);
+    await this.homeBodyComponents.item("boardTitle").setValue(item);
     await this.homeBodyComponents.item("createBtn").click();
     const boardNameDisplay = await this.boardHeader.item("boardNameDisplay").getText();
-    expect(boardNameDisplay, `A new board name ${boardNameDisplay} isn't equal to ${boardName}`).to.equal(boardName);
+    expect(boardNameDisplay, `A new board name ${boardNameDisplay} isn't equal to ${item}`).to.equal(item);
   }
 }

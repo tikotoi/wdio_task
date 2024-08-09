@@ -10,14 +10,14 @@ export class Basepage {
   async open() {
     await browser.url("https://trello.com/");
   }
-  async userlogInSuccessfully () {
+  async logInSuccessfully (userName, password) {
     await this.open();
     await this.basePageComponents.item("logIn").waitForDisplayed();
     await this.basePageComponents.item("logIn").click();
-    await this.basePageComponents.item("userName").setValue("wdiotask@gmail.com");
+    await this.basePageComponents.item("userName").setValue(userName);
     await this.basePageComponents.item("continueBtn").click();
     await this.basePageComponents.item("password").waitForDisplayed();
-    await this.basePageComponents.item("password").setValue("11112222==");
+    await this.basePageComponents.item("password").setValue(password);
     await this.basePageComponents.item("logInBtn").click();
     const accountTitle = await this.headerComponent.item("account");
     const titleAttribute = await accountTitle.getAttribute("title");
