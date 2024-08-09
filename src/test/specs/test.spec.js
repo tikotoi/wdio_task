@@ -10,7 +10,7 @@ describe("Trello BDD Scenarios", () => {
   });
 
   it("User Update Profile Info", async () => {
-    await pages("homePage").updateProfileInfo("WDIO Practical Task _ Tinatin Abuladze");
+    await pages("homePage").updateBioInProfileInfo("WDIO Practical Task _ Tinatin Abuladze");
   });
 
   it("User Creates New Board", async () => {

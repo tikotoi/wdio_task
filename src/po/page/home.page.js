@@ -15,7 +15,7 @@ export class HomePage {
   }
 
   //User updates profile info
-  async updateProfileInfo (item) {
+  async updateBioInProfileInfo (item) {
     await this.headerComponent.item("account").waitForDisplayed();
     await this.headerComponent.item("account").click();
     await this.headerComponent.item("profile").click();
