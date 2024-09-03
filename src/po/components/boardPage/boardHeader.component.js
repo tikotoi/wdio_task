@@ -5,7 +5,7 @@ export class BoardHeader {
       filterBtn: "//div[text()='Filters']",
       filterInput: "//input[@placeholder='Enter a keyword…']",
       filter:
-        "//span[@aria-label='Color: bold red, title: “Urgent”' and @data-color='red_dark' and @data-testid='card-label']",
+        "//span[@aria-label='Color: red, title: “Urgent”' and @data-color='red' and @data-testid='card-label']",
       visibilityBtn: ".WMmcWJ5gc165zK",
       private: "[data-testid='board-visibility-dropdown-Private']",
       checkIcon:
