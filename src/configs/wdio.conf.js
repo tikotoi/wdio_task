@@ -66,9 +66,7 @@ export const config = {
   before: function (capabilities, specs) {
     browser.setWindowSize(1920, 1080);
   },
-  onComplete: function (exitCode, config, capabilities, results) {
-    (async () => {
-      await reportAggregator.createReport();
-    })();
+  onComplete: async function (exitCode, config, capabilities, results) {
+    await reportAggregator.createReport();
   },
 };
